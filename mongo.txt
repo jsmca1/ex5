@@ -1,0 +1,821 @@
+db.createCollection('Department')
+
+
+db.Department.insertOne({"DeptID" : "D1", "DeptName" : "Finance", "DeptManager" : "E2"})
+db.Department.insertOne({"DeptID" : "D2", "DeptName" : "Finance", "DeptManager" : "E3"})
+db.Department.insertOne({"DeptID" : "D3", "DeptName" : "Advertisement", "DeptManager" : "E5"})
+db.Department.insertOne({"DeptID" : "D4", "DeptName" : "HD", "DeptManager" : "E1"})
+
+db.Department.find()
+
+
+db.createCollection('Project')
+
+db.Project.insertOne({"ProjectID" : "P1", "ProjectName" : "Facebook", "ProjectStart" : "04/06/2021", "ProjectEnd" : "04/08/2021"})
+db.Project.insertOne({"ProjectID" : "P2", "ProjectName" : "Instagram", "ProjectStart" : "06/07/2021", "ProjectEnd" : "04/08/2021"})
+db.Project.insertOne({"ProjectID" : "P3", "ProjectName" : "Whatsapp", "ProjectStart" : "02/02/2021", "ProjectEnd" : "05/08/2021"})
+db.Project.insertOne({"ProjectID" : "P4", "ProjectName" : "Youtube", "ProjectStart" : "02/02/2022", "ProjectEnd" : "05/09/2022"})
+
+db.Project.find()
+
+
+
+db.createCollection('Employee')
+
+db.Employee.insertOne({"SSN" : "E1", "EmpName" : "Rohan", "Salary" : 89000, "DOB" : "05/09/1999", "DeptID" : "D2", "ProjectID" : [{"ProjectID": "P2", "Hour" : "4 hour"}, {"ProjectID": "P3", "Hour" : "2 hour"}]})
+
+db.Employee.insertOne({"SSN" : "E2", "EmpName" : "Rohit", "Salary" : 99000, "DOB" : "04/09/1999", "DeptID" : "D1", "ProjectID" : [{"ProjectID": "P2", "Hour" : "2 hour"}, {"ProjectID": "P1", "Hour" : "2 hour"}]})
+
+db.Employee.insertOne({"SSN" : "E3", "EmpName" : "Roshni", "Salary" : 199000, "DOB" : "04/10/1999", "DeptID" : "D4", "ProjectID" : [{"ProjectID": "P3", "Hour" : "1 hour"}, {"ProjectID": "P5", "Hour" : "5 hour"}]})
+
+db.Employee.insertOne({"SSN" : "E4", "EmpName" : "Karan", "Salary" : 19900, "DOB" : "04/10/2000", "DeptID" : "D3", "ProjectID" : [{"ProjectID": "P1", "Hour" : "1 hour"}, {"ProjectID": "P2", "Hour" : "1 hour"}]})
+
+db.Employee.insertOne({"SSN" : "E5", "EmpName" : "Karuna", "Salary" : 79900, "DOB" : "01/10/2000", "DeptID" : "D5", "ProjectID" : [{"ProjectID": "P2", "Hour" : "1 hour"}, {"ProjectID": "P4", "Hour" : "5 hour"}]})
+
+db.Employee.insertOne({"SSN" : "E6", "EmpName" : "Roshan", "Salary" : 19900, "DOB" : "04/10/1899", "DeptID" : "D4", "ProjectID" : [{"ProjectID": "P3", "Hour" : "1 hour"}, {"ProjectID": "P5", "Hour" : "5 hour"}, {"ProjectID" : "P2", "Hour" : "6 hour"}]})
+
+db.Employee.insertOne({"SSN" : "E6", "EmpName" : "Roshan", "Salary" : 19900, "DOB" : "04/10/1899", "DeptID" : "D4", "ProjectID" : [{"ProjectID": "P3", "Hour" : "1 hour"}, {"ProjectID": "P5", "Hour" : "5 hour"}, {"ProjectID" : "P2", "Hour" : "6 hour"}]})
+
+
+db.Employee.find()
+
+
+
+
+
+1)
+db.Employee.find().sort({"SSN" : 1}).pretty()
+
+db.Employee.find().sort({"SSN" : -1}).pretty()
+
+2)
+db.Employee.find({"DeptID" : "D1"}).pretty()
+
+
+3)
+db.Employee.aggregate({ $group : { _id: null, max: { $max : "$Salary" }}});
+
+//extra
+db.Employee.aggregate([{$project: { count: { $size:"$ProjectID" }}}])
+
+
+4)
+
+5)
+
+
+db.Employee.deleteOne([{group:{_id:null,min_sal:{$min:"$exp"}}}])
+
+
+
+
+
+
+
+
+-----------------------------------------------------------------------------------------------
+
+ba
+>
+>
+>
+>
+>
+>
+> db.Department.insertOne({"DeptID" : "D1", "DeptName" : "Finance", "DeptManager" : "E2"})
+{
+"acknowledged" : true,
+"insertedId" : ObjectId("632c2df463e6bb388a374f98")
+}
+> db.Department.insertOne({"DeptID" : "D2", "DeptName" : "Finance", "DeptManager" : "E3"})
+{
+"acknowledged" : true,
+"insertedId" : ObjectId("632c2e0863e6bb388a374f99")
+}
+> db.Department.insertOne({"DeptID" : "D3", "DeptName" : "Advertisement", "DeptManager" : "E5"})
+{
+"acknowledged" : true,
+"insertedId" : ObjectId("632c2e1d63e6bb388a374f9a")
+}
+> db.Department.insertOne({"DeptID" : "D4", "DeptName" : "HD", "DeptManager" : "E1"})
+{
+"acknowledged" : true,
+"insertedId" : ObjectId("632c2e3163e6bb388a374f9b")
+}
+>
+>
+>
+> db.Department.find()
+{ "_id" : ObjectId("632c2df463e6bb388a374f98"), "DeptID" : "D1", "DeptName" : "Finance", "DeptManager" : "E2" }
+{ "_id" : ObjectId("632c2e0863e6bb388a374f99"), "DeptID" : "D2", "DeptName" : "Finance", "DeptManager" : "E3" }
+{ "_id" : ObjectId("632c2e1d63e6bb388a374f9a"), "DeptID" : "D3", "DeptName" : "Advertisement", "DeptManager" : "E5" }
+{ "_id" : ObjectId("632c2e3163e6bb388a374f9b"), "DeptID" : "D4", "DeptName" : "HD", "DeptManager" : "E1" }
+>
+>
+>
+>
+>
+>
+>
+> db.createCollection('Project')
+{ "ok" : 1 }
+> db.Project.insertOne({"ProjectID" : "P1", "ProjectName" : "Facebook", "ProjectStart" : "04/06/2021", "ProjectEnd" : "04/08/2021"})
+{
+"acknowledged" : true,
+"insertedId" : ObjectId("632c2ef263e6bb388a374f9c")
+}
+> db.Project.insertOne({"ProjectID" : "P2", "ProjectName" : "Instagram", "ProjectStart" : "06/07/2021", "ProjectEnd" : "04/08/2021"})
+{
+"acknowledged" : true,
+"insertedId" : ObjectId("632c2f1a63e6bb388a374f9d")
+}
+> db.Project.insertOne({"ProjectID" : "P3", "ProjectName" : "Whatsapp", "ProjectStart" : "02/02/2021", "ProjectEnd" : "05/08/2021"})
+{
+"acknowledged" : true,
+"insertedId" : ObjectId("632c2f3263e6bb388a374f9e")
+}
+> db.Project.insertOne({"ProjectID" : "P4", "ProjectName" : "Youtube", "ProjectStart" : "02/02/2022", "ProjectEnd" : "05/09/2022"})
+{
+"acknowledged" : true,
+"insertedId" : ObjectId("632c2f5263e6bb388a374f9f")
+}
+>
+>
+> db.Project.find()
+{ "_id" : ObjectId("632c2ef263e6bb388a374f9c"), "ProjectID" : "P1", "ProjectName" : "Facebook", "ProjectStart" : "04/06/2021", "ProjectEnd" : "04/08/2021" }
+{ "_id" : ObjectId("632c2f1a63e6bb388a374f9d"), "ProjectID" : "P2", "ProjectName" : "Instagram", "ProjectStart" : "06/07/2021", "ProjectEnd" : "04/08/2021" }
+{ "_id" : ObjectId("632c2f3263e6bb388a374f9e"), "ProjectID" : "P3", "ProjectName" : "Whatsapp", "ProjectStart" : "02/02/2021", "ProjectEnd" : "05/08/2021" }
+{ "_id" : ObjectId("632c2f5263e6bb388a374f9f"), "ProjectID" : "P4", "ProjectName" : "Youtube", "ProjectStart" : "02/02/2022", "ProjectEnd" : "05/09/2022" }
+>
+>
+>
+>
+>
+>
+>
+>
+> db.Employee.insertOne({"SSN" : "E1", "EmpName" : "Rohan", "Salary" : 89000, "DOB" : "05/09/1999", "DeptID" : "D2", "ProjectID" : [{"ProjectID": "P2", "Hour" : "4 hour"}, {"ProjectID": "P3", "Hour" : "2 hour"}]})
+{
+"acknowledged" : true,
+"insertedId" : ObjectId("632c325d63e6bb388a374fa0")
+}
+> db.Employee.insertOne({"SSN" : "E2", "EmpName" : "Rohit", "Salary" : 99000, "DOB" : "04/09/1999", "DeptID" : "D1", "ProjectID" : [{"ProjectID": "P2", "Hour" : "2 hour"}, {"ProjectID": "P1", "Hour" : "2 hour"}]})
+{
+"acknowledged" : true,
+"insertedId" : ObjectId("632c328d63e6bb388a374fa1")
+}
+> db.Employee.insertOne({"SSN" : "E3", "EmpName" : "Roshni", "Salary" : 199000, "DOB" : "04/10/1999", "DeptID" : "D4", "ProjectID" : [{"ProjectID": "P3", "Hour" : "1 hour"}, {"ProjectID": "P5", "Hour" : "5 hour"}]})
+{
+"acknowledged" : true,
+"insertedId" : ObjectId("632c32c063e6bb388a374fa2")
+}
+> db.Employee.insertOne({"SSN" : "E4", "EmpName" : "Karan", "Salary" : 19900, "DOB" : "04/10/2000", "DeptID" : "D3", "ProjectID" : [{"ProjectID": "P1", "Hour" : "1 hour"}, {"ProjectID": "P2", "Hour" : "1 hour"}]})
+{
+"acknowledged" : true,
+"insertedId" : ObjectId("632c32e863e6bb388a374fa3")
+}
+> db.Employee.insertOne({"SSN" : "E5", "EmpName" : "Karuna", "Salary" : 79900, "DOB" : "01/10/2000", "DeptID" : "D5", "ProjectID" : [{"ProjectID": "P2", "Hour" : "1 hour"}, {"ProjectID": "P4", "Hour" : "5 hour"}]})
+{
+"acknowledged" : true,
+"insertedId" : ObjectId("632c331163e6bb388a374fa4")
+}
+> db.Employee.find()
+{ "_id" : ObjectId("632c325d63e6bb388a374fa0"), "SSN" : "E1", "EmpName" : "Rohan", "Salary" : 89000, "DOB" : "05/09/1999", "DeptID" : "D2", "ProjectID" : [ { "ProjectID" : "P2", "Hour" : "4 hour" }, { "ProjectID" : "P3", "Hour" : "2 hour" } ] }
+{ "_id" : ObjectId("632c328d63e6bb388a374fa1"), "SSN" : "E2", "EmpName" : "Rohit", "Salary" : 99000, "DOB" : "04/09/1999", "DeptID" : "D1", "ProjectID" : [ { "ProjectID" : "P2", "Hour" : "2 hour" }, { "ProjectID" : "P1", "Hour" : "2 hour" } ] }
+{ "_id" : ObjectId("632c32c063e6bb388a374fa2"), "SSN" : "E3", "EmpName" : "Roshni", "Salary" : 199000, "DOB" : "04/10/1999", "DeptID" : "D4", "ProjectID" : [ { "ProjectID" : "P3", "Hour" : "1 hour" }, { "ProjectID" : "P5", "Hour" : "5 hour" } ] }
+{ "_id" : ObjectId("632c32e863e6bb388a374fa3"), "SSN" : "E4", "EmpName" : "Karan", "Salary" : 19900, "DOB" : "04/10/2000", "DeptID" : "D3", "ProjectID" : [ { "ProjectID" : "P1", "Hour" : "1 hour" }, { "ProjectID" : "P2", "Hour" : "1 hour" } ] }
+{ "_id" : ObjectId("632c331163e6bb388a374fa4"), "SSN" : "E5", "EmpName" : "Karuna", "Salary" : 79900, "DOB" : "01/10/2000", "DeptID" : "D5", "ProjectID" : [ { "ProjectID" : "P2", "Hour" : "1 hour" }, { "ProjectID" : "P4", "Hour" : "5 hour" } ] }
+>
+>
+>
+>
+>
+>
+> db.Employee.find().sort({"SSN" : 1})
+{ "_id" : ObjectId("632c325d63e6bb388a374fa0"), "SSN" : "E1", "EmpName" : "Rohan", "Salary" : 89000, "DOB" : "05/09/1999", "DeptID" : "D2", "ProjectID" : [ { "ProjectID" : "P2", "Hour" : "4 hour" }, { "ProjectID" : "P3", "Hour" : "2 hour" } ] }
+{ "_id" : ObjectId("632c328d63e6bb388a374fa1"), "SSN" : "E2", "EmpName" : "Rohit", "Salary" : 99000, "DOB" : "04/09/1999", "DeptID" : "D1", "ProjectID" : [ { "ProjectID" : "P2", "Hour" : "2 hour" }, { "ProjectID" : "P1", "Hour" : "2 hour" } ] }
+{ "_id" : ObjectId("632c32c063e6bb388a374fa2"), "SSN" : "E3", "EmpName" : "Roshni", "Salary" : 199000, "DOB" : "04/10/1999", "DeptID" : "D4", "ProjectID" : [ { "ProjectID" : "P3", "Hour" : "1 hour" }, { "ProjectID" : "P5", "Hour" : "5 hour" } ] }
+{ "_id" : ObjectId("632c32e863e6bb388a374fa3"), "SSN" : "E4", "EmpName" : "Karan", "Salary" : 19900, "DOB" : "04/10/2000", "DeptID" : "D3", "ProjectID" : [ { "ProjectID" : "P1", "Hour" : "1 hour" }, { "ProjectID" : "P2", "Hour" : "1 hour" } ] }
+{ "_id" : ObjectId("632c331163e6bb388a374fa4"), "SSN" : "E5", "EmpName" : "Karuna", "Salary" : 79900, "DOB" : "01/10/2000", "DeptID" : "D5", "ProjectID" : [ { "ProjectID" : "P2", "Hour" : "1 hour" }, { "ProjectID" : "P4", "Hour" : "5 hour" } ] }
+> db.Employee.find().sort({"SSN" : 1}).pretty()
+{
+"_id" : ObjectId("632c325d63e6bb388a374fa0"),
+"SSN" : "E1",
+"EmpName" : "Rohan",
+"Salary" : 89000,
+"DOB" : "05/09/1999",
+"DeptID" : "D2",
+"ProjectID" : [
+{
+"ProjectID" : "P2",
+"Hour" : "4 hour"
+},
+{
+"ProjectID" : "P3",
+"Hour" : "2 hour"
+}
+]
+}
+{
+"_id" : ObjectId("632c328d63e6bb388a374fa1"),
+"SSN" : "E2",
+"EmpName" : "Rohit",
+"Salary" : 99000,
+"DOB" : "04/09/1999",
+"DeptID" : "D1",
+"ProjectID" : [
+{
+"ProjectID" : "P2",
+"Hour" : "2 hour"
+},
+{
+"ProjectID" : "P1",
+"Hour" : "2 hour"
+}
+]
+}
+{
+"_id" : ObjectId("632c32c063e6bb388a374fa2"),
+"SSN" : "E3",
+"EmpName" : "Roshni",
+"Salary" : 199000,
+"DOB" : "04/10/1999",
+"DeptID" : "D4",
+"ProjectID" : [
+{
+"ProjectID" : "P3",
+"Hour" : "1 hour"
+},
+{
+"ProjectID" : "P5",
+"Hour" : "5 hour"
+}
+]
+}
+{
+"_id" : ObjectId("632c32e863e6bb388a374fa3"),
+"SSN" : "E4",
+"EmpName" : "Karan",
+"Salary" : 19900,
+"DOB" : "04/10/2000",
+"DeptID" : "D3",
+"ProjectID" : [
+{
+"ProjectID" : "P1",
+"Hour" : "1 hour"
+},
+{
+"ProjectID" : "P2",
+"Hour" : "1 hour"
+}
+]
+}
+{
+"_id" : ObjectId("632c331163e6bb388a374fa4"),
+"SSN" : "E5",
+"EmpName" : "Karuna",
+"Salary" : 79900,
+"DOB" : "01/10/2000",
+"DeptID" : "D5",
+"ProjectID" : [
+{
+"ProjectID" : "P2",
+"Hour" : "1 hour"
+},
+{
+"ProjectID" : "P4",
+"Hour" : "5 hour"
+}
+]
+}
+> db.Employee.find().sort({"SSN" : -1}).pretty()
+{
+"_id" : ObjectId("632c331163e6bb388a374fa4"),
+"SSN" : "E5",
+"EmpName" : "Karuna",
+"Salary" : 79900,
+"DOB" : "01/10/2000",
+"DeptID" : "D5",
+"ProjectID" : [
+{
+"ProjectID" : "P2",
+"Hour" : "1 hour"
+},
+{
+"ProjectID" : "P4",
+"Hour" : "5 hour"
+}
+]
+}
+{
+"_id" : ObjectId("632c32e863e6bb388a374fa3"),
+"SSN" : "E4",
+"EmpName" : "Karan",
+"Salary" : 19900,
+"DOB" : "04/10/2000",
+"DeptID" : "D3",
+"ProjectID" : [
+{
+"ProjectID" : "P1",
+"Hour" : "1 hour"
+},
+{
+"ProjectID" : "P2",
+"Hour" : "1 hour"
+}
+]
+}
+{
+"_id" : ObjectId("632c32c063e6bb388a374fa2"),
+"SSN" : "E3",
+"EmpName" : "Roshni",
+"Salary" : 199000,
+"DOB" : "04/10/1999",
+"DeptID" : "D4",
+"ProjectID" : [
+{
+"ProjectID" : "P3",
+"Hour" : "1 hour"
+},
+{
+"ProjectID" : "P5",
+"Hour" : "5 hour"
+}
+]
+}
+{
+"_id" : ObjectId("632c328d63e6bb388a374fa1"),
+"SSN" : "E2",
+"EmpName" : "Rohit",
+"Salary" : 99000,
+"DOB" : "04/09/1999",
+"DeptID" : "D1",
+"ProjectID" : [
+{
+"ProjectID" : "P2",
+"Hour" : "2 hour"
+},
+{
+"ProjectID" : "P1",
+"Hour" : "2 hour"
+}
+]
+}
+{
+"_id" : ObjectId("632c325d63e6bb388a374fa0"),
+"SSN" : "E1",
+"EmpName" : "Rohan",
+"Salary" : 89000,
+"DOB" : "05/09/1999",
+"DeptID" : "D2",
+"ProjectID" : [
+{
+"ProjectID" : "P2",
+"Hour" : "4 hour"
+},
+{
+"ProjectID" : "P3",
+"Hour" : "2 hour"
+}
+]
+}
+>
+>
+>
+>
+> db.Employee.find({"DeptID" : "D1"}).pretty()
+{
+"_id" : ObjectId("632c328d63e6bb388a374fa1"),
+"SSN" : "E2",
+"EmpName" : "Rohit",
+"Salary" : 99000,
+"DOB" : "04/09/1999",
+"DeptID" : "D1",
+"ProjectID" : [
+{
+"ProjectID" : "P2",
+"Hour" : "2 hour"
+},
+{
+"ProjectID" : "P1",
+"Hour" : "2 hour"
+}
+]
+}
+> db.Department.find()
+{ "_id" : ObjectId("632c2df463e6bb388a374f98"), "DeptID" : "D1", "DeptName" : "Finance", "DeptManager" : "E2" }
+{ "_id" : ObjectId("632c2e0863e6bb388a374f99"), "DeptID" : "D2", "DeptName" : "Finance", "DeptManager" : "E3" }
+{ "_id" : ObjectId("632c2e1d63e6bb388a374f9a"), "DeptID" : "D3", "DeptName" : "Advertisement", "DeptManager" : "E5" }
+{ "_id" : ObjectId("632c2e3163e6bb388a374f9b"), "DeptID" : "D4", "DeptName" : "HD", "DeptManager" : "E1" }
+>
+>
+>
+>
+>
+>
+> db.Employee.find({"DeptID" : "D1"}).pretty()
+{
+"_id" : ObjectId("632c328d63e6bb388a374fa1"),
+"SSN" : "E2",
+"EmpName" : "Rohit",
+"Salary" : 99000,
+"DOB" : "04/09/1999",
+"DeptID" : "D1",
+"ProjectID" : [
+{
+"ProjectID" : "P2",
+"Hour" : "2 hour"
+},
+{
+"ProjectID" : "P1",
+"Hour" : "2 hour"
+}
+]
+}
+>
+>
+>
+>
+>
+>
+> db.Employee.aggregate({ $group : { _id: null, max: { $max : "$Salary" }}});
+{ "_id" : null, "max" : 199000 }
+>
+>
+>
+> db.Employee.find().pretty()
+{
+"_id" : ObjectId("632c325d63e6bb388a374fa0"),
+"SSN" : "E1",
+"EmpName" : "Rohan",
+"Salary" : 89000,
+"DOB" : "05/09/1999",
+"DeptID" : "D2",
+"ProjectID" : [
+{
+"ProjectID" : "P2",
+"Hour" : "4 hour"
+},
+{
+"ProjectID" : "P3",
+"Hour" : "2 hour"
+}
+]
+}
+{
+"_id" : ObjectId("632c328d63e6bb388a374fa1"),
+"SSN" : "E2",
+"EmpName" : "Rohit",
+"Salary" : 99000,
+"DOB" : "04/09/1999",
+"DeptID" : "D1",
+"ProjectID" : [
+{
+"ProjectID" : "P2",
+"Hour" : "2 hour"
+},
+{
+"ProjectID" : "P1",
+"Hour" : "2 hour"
+}
+]
+}
+{
+"_id" : ObjectId("632c32c063e6bb388a374fa2"),
+"SSN" : "E3",
+"EmpName" : "Roshni",
+"Salary" : 199000,
+"DOB" : "04/10/1999",
+"DeptID" : "D4",
+"ProjectID" : [
+{
+"ProjectID" : "P3",
+"Hour" : "1 hour"
+},
+{
+"ProjectID" : "P5",
+"Hour" : "5 hour"
+}
+]
+}
+{
+"_id" : ObjectId("632c32e863e6bb388a374fa3"),
+"SSN" : "E4",
+"EmpName" : "Karan",
+"Salary" : 19900,
+"DOB" : "04/10/2000",
+"DeptID" : "D3",
+"ProjectID" : [
+{
+"ProjectID" : "P1",
+  db.Employee.find().pretty()
+{
+"_id" : ObjectId("632c325d63e6bb388a374fa0"),
+"SSN" : "E1",
+"EmpName" : "Rohan",
+"Salary" : 89000,
+"DOB" : "05/09/1999",
+"DeptID" : "D2",
+"ProjectID" : [
+{
+"ProjectID" : "P2",
+"Hour" : "4 hour"
+},
+{
+"ProjectID" : "P3",
+"Hour" : "2 hour"
+}
+]
+}
+{
+"_id" : ObjectId("632c328d63e6bb388a374fa1"),
+"SSN" : "E2",
+"EmpName" : "Rohit",
+"Salary" : 99000,
+"DOB" : "04/09/1999",
+"DeptID" : "D1",
+"ProjectID" : [
+{
+"ProjectID" : "P2",
+"Hour" : "2 hour"
+},
+{
+"ProjectID" : "P1",
+"Hour" : "2 hour"
+}
+]
+}
+{
+"_id" : ObjectId("632c32c063e6bb388a374fa2"),
+"SSN" : "E3",
+"EmpName" : "Roshni",
+"Salary" : 199000,
+"DOB" : "04/10/1999",
+"DeptID" : "D4",
+"ProjectID" : [
+{
+"ProjectID" : "P3",
+"Hour" : "1 hour"
+},
+{
+"ProjectID" : "P5",
+"Hour" : "5 hour"
+}
+]
+}
+{
+"_id" : ObjectId("632c32e863e6bb388a374fa3"),
+"SSN" : "E4",
+"EmpName" : "Karan",
+"Salary" : 19900,
+"DOB" : "04/10/2000",
+"DeptID" : "D3",
+"ProjectID" : [
+{
+"ProjectID" : "P1",
+"Hour" : "1 hour"
+},
+{
+"ProjectID" : "P2",
+"Hour" : "1 hour"
+}
+]
+}
+{
+"_id" : ObjectId("632c331163e6bb388a374fa4"),
+"SSN" : "E5",
+"EmpName" : "Karuna",
+"Salary" : 79900,
+"DOB" : "01/10/2000",
+"DeptID" : "D5",
+"ProjectID" : [
+{
+"ProjectID" : "P2",
+"Hour" : "1 hour"
+},
+{
+"ProjectID" : "P4",
+"Hour" : "5 hour"
+}
+]
+}
+> db.Employee.insertOne({"SSN" : "E6", "EmpName" : "Roshan", "Salary" : 19900, "DOB" : "04/10/1899", "DeptID" : "D4", "ProjectID" : [{"ProjectID": "P3", "Hour" : "1 hour"}, {"ProjectID": "P5", "Hour" : "5 hour"}, {"ProjectID" : "P2", "Hour" : "6 hour"}]})
+{
+"acknowledged" : true,
+"insertedId" : ObjectId("632c3c2c63e6bb388a374fa5")
+}
+> db.Employee.find().pretty()
+{
+"_id" : ObjectId("632c325d63e6bb388a374fa0"),
+"SSN" : "E1",
+"EmpName" : "Rohan",
+"Salary" : 89000,
+"DOB" : "05/09/1999",
+"DeptID" : "D2",
+"ProjectID" : [
+{
+"ProjectID" : "P2",
+"Hour" : "4 hour"
+},
+{
+"ProjectID" : "P3",
+"Hour" : "2 hour"
+}
+]
+}
+{
+"_id" : ObjectId("632c328d63e6bb388a374fa1"),
+"SSN" : "E2",
+"EmpName" : "Rohit",
+"Salary" : 99000,
+"DOB" : "04/09/1999",
+"DeptID" : "D1",
+"ProjectID" : [
+{
+"ProjectID" : "P2",
+"Hour" : "2 hour"
+},
+{
+"ProjectID" : "P1",
+"Hour" : "2 hour"
+}
+]
+}
+{
+"_id" : ObjectId("632c32c063e6bb388a374fa2"),
+"SSN" : "E3",
+"EmpName" : "Roshni",
+"Salary" : 199000,
+"DOB" : "04/10/1999",
+"DeptID" : "D4",
+"ProjectID" : [
+{
+"ProjectID" : "P3",
+"Hour" : "1 hour"
+},
+{
+"ProjectID" : "P5",
+"Hour" : "5 hour"
+}
+]
+}
+{
+"_id" : ObjectId("632c32e863e6bb388a374fa3"),
+"SSN" : "E4",
+"EmpName" : "Karan",
+"Salary" : 19900,
+"DOB" : "04/10/2000",
+"DeptID" : "D3",
+"ProjectID" : [
+{
+"ProjectID" : "P1",
+"Hour" : "1 hour"
+},
+{
+"ProjectID" : "P2",
+"Hour" : "1 hour"
+}
+]
+}
+{
+"_id" : ObjectId("632c331163e6bb388a374fa4"),
+"SSN" : "E5",
+"EmpName" : "Karuna",
+"Salary" : 79900,
+"DOB" : "01/10/2000",
+"DeptID" : "D5",
+"ProjectID" : [
+{
+"ProjectID" : "P2",
+"Hour" : "1 hour"
+},
+{
+"ProjectID" : "P4",
+"Hour" : "5 hour"
+}
+]
+}
+{
+"_id" : ObjectId("632c3c2c63e6bb388a374fa5"),
+"SSN" : "E6",
+"EmpName" : "Roshan",
+"Salary" : 19900,
+"DOB" : "04/10/1899",
+"DeptID" : "D4",
+"ProjectID" : [
+{
+"ProjectID" : "P3",
+"Hour" : "1 hour"
+},
+{
+"ProjectID" : "P5",
+"Hour" : "5 hour"
+},
+{
+"ProjectID" : "P2",
+"Hour" : "6 hour"
+}
+]
+}
+>
+>
+> db.Employee.aggregate({ $group : { _id: null, max: { $max : "$Salary" }}});
+{ "_id" : null, "max" : 199000 }
+>
+>
+>
+>
+> db.Employee.aggregate([{$project: { count: { $size:"$ProjectID" }}}])
+{ "_id" : ObjectId("632c325d63e6bb388a374fa0"), "count" : 2 }
+{ "_id" : ObjectId("632c328d63e6bb388a374fa1"), "count" : 2 }
+{ "_id" : ObjectId("632c32c063e6bb388a374fa2"), "count" : 2 }
+{ "_id" : ObjectId("632c32e863e6bb388a374fa3"), "count" : 2 }
+{ "_id" : ObjectId("632c331163e6bb388a374fa4"), "count" : 2 }
+{ "_id" : ObjectId("632c3c2c63e6bb388a374fa5"), "count" : 3 }
+>
+>
+> db.Employee.aggregate([{$project: { max: {$max: count: { $size:"$ProjectID" }}}}])
+2022-09-22T16:19:22.463+0530 E QUERY    [thread1] SyntaxError: missing } after property list @(shell):1:53
+> db.Employee.aggregate([{$project: { count: { $size:"$ProjectID" }}}])
+{ "_id" : ObjectId("632c325d63e6bb388a374fa0"), "count" : 2 }
+{ "_id" : ObjectId("632c328d63e6bb388a374fa1"), "count" : 2 }
+{ "_id" : ObjectId("632c32c063e6bb388a374fa2"), "count" : 2 }
+{ "_id" : ObjectId("632c32e863e6bb388a374fa3"), "count" : 2 }
+{ "_id" : ObjectId("632c331163e6bb388a374fa4"), "count" : 2 }
+{ "_id" : ObjectId("632c3c2c63e6bb388a374fa5"), "count" : 3 }
+>
+>
+>
+>
+> db.Employee.aggregate({ $group : { _id: null, max: { $max : "$size:"$ProjectID"" }}})
+2022-09-22T16:21:03.848+0530 E QUERY    [thread1] SyntaxError: missing } after property list @(shell):1:68
+>
+> db.Employee.aggregate({ $group : { _id: null, max: { $max : $size:"$ProjectID" }}})
+2022-09-22T16:21:19.592+0530 E QUERY    [thread1] SyntaxError: missing } after property list @(shell):1:65
+>
+>
+>
+> db.Employee.aggregate({ $group : { _id: null, max: { $max : "$size:"$ProjectID"" }}})
+2022-09-22T16:21:25.448+0530 E QUERY    [thread1] SyntaxError: missing } after property list @(shell):1:68
+> db.Employee.aggregate([{$project: { max: {$max: count: { $size:"$ProjectID" }}}}])
+2022-09-22T16:21:33.224+0530 E QUERY    [thread1] SyntaxError: missing } after property list @(shell):1:53
+>
+>
+>
+>
+>
+> db.Employee.aggregate([{$project: { count: { $size:"$ProjectID" }}}])
+{ "_id" : ObjectId("632c325d63e6bb388a374fa0"), "count" : 2 }
+{ "_id" : ObjectId("632c328d63e6bb388a374fa1"), "count" : 2 }
+{ "_id" : ObjectId("632c32c063e6bb388a374fa2"), "count" : 2 }
+{ "_id" : ObjectId("632c32e863e6bb388a374fa3"), "count" : 2 }
+{ "_id" : ObjectId("632c331163e6bb388a374fa4"), "count" : 2 }
+{ "_id" : ObjectId("632c3c2c63e6bb388a374fa5"), "count" : 3 }
+>
+>
+>
+>
+> db.Employee.aggregate(
+... {$unwind : "$ProjectID"},
+...
+...
+>
+>
+>
+> db.Employee.aggregate([{$project: { count: { $size:"$ProjectID" }, {$sort : {size -1}}, {$limit : 1}}}])
+2022-09-22T16:31:08.264+0530 E QUERY    [thread1] SyntaxError: invalid property id @(shell):1:67
+>
+>
+>
+> db.Employee.aggregate([{$project: { count: { $size:"$ProjectID" }}}, {$sort : {count : -1}}, {$limit : 1}])
+{ "_id" : ObjectId("632c3c2c63e6bb388a374fa5"), "count" : 3 }
+>
+>
+>
+> db.Employee.aggregate([{$project: {EmployeeOftheYear : "True", count: { $size:"$ProjectID" }}}, {$sort : {count : -1}}, {$limit : 1}])
+{ "_id" : ObjectId("632c3c2c63e6bb388a374fa5"), "EmployeeOftheYear" : "True", "count" : 3 }
+>
+>
+>
+>
+>
+>
+>
+> db.Employee.aggregate([{$project: {EmployeeOftheYear : "True", count: { $size:"$ProjectID" }}}, {$sort : {count : -1}}, {$limit : 1}])
+{ "_id" : ObjectId("632c3c2c63e6bb388a374fa5"), "EmployeeOftheYear" : "True", "count" : 3 }
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+
+
+	
+	
+	
+
